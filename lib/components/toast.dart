@@ -8,7 +8,7 @@ class Messege{
     String messege = "Done!",
     ToastGravity gravity= ToastGravity.BOTTOM,
     int timeInSecForIosWeb = 1,
-    Color background = Colors.green,
+    Color background = Colors.orange,
     Color fontColor = Colors.black,
     double fontSize = 16.0,
 })

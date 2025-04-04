@@ -31,7 +31,7 @@ Widget searchWidget() {
     child: TextFormField(
       decoration: InputDecoration(
         suffixIcon: Icon(Icons.search,size: 20,),
-        hintText: 'Search for Services',
+        hintText: 'Search for Items',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none

@@ -1,12 +1,10 @@
-
 import 'package:flutter/material.dart';
-import 'package:home_services_app/auth/loginScreen.dart';
 import 'package:home_services_app/auth/services/auth_services.dart';
-import 'package:home_services_app/pages/DashBoard.dart';
-import 'package:home_services_app/pages/Homepage.dart';
 
-import '../utils/toast.dart';
-
+import '../pages/DashBoard.dart';
+import '../components/toast.dart';
+import 'loginScreen.dart';
+import 'package:get/get.dart';
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -15,7 +13,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
@@ -24,56 +21,95 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/logo.jpg"),
+                  fit: BoxFit.cover)),
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height*0.3,),
-                  Text("SignUp",
-                    style: TextStyle(fontSize: 70,fontWeight: FontWeight.bold,color: Colors.blue),
-          
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
                   ),
-                  SizedBox(height: 10,),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orangeAccent),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     controller: _email,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.orangeAccent, width: 2)),
                         label: Text("E-mail"),
-                        hintText: "Enter Your email"
-                    ),
+                        hintText: "Enter Your email"),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     controller: _password,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.orangeAccent, width: 2)),
                         label: Text("Password"),
-                        hintText: "Enter Your password"
-                    ),
+                        hintText: "Enter Your password"),
                   ),
-                  SizedBox(height: 10,),
-                  ElevatedButton(onPressed: () async {
-                    await AuthServiceHelper.createAccountWithEmail(_email.text, _password.text)
-                        .then((value){
-                          if(value == "Account Created"){
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await AuthServiceHelper.createAccountWithEmail(
+                                _email.text, _password.text)
+                            .then((value) {
+                          if (value == "Account Created") {
                             Messege.Show(messege: "Account Created");
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> DashBoardScreen()));
-                          }
-                          else{
+                            Get.to(DashBoardScreen());
+                          } else {
                             Messege.Show(messege: "Error: $value");
                           }
-                    });
-                  }, child: Text("SignUp")),
-                  SizedBox(height: 10,),
+                        });
+                      },
+                      child: Text(
+                        "SignUp",
+                        style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text("Already have an account?"),
-                      TextButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
-                      }, child: Text("Login"))
+                      TextButton(
+                          onPressed: () {
+                            Get.to(LoginScreen());
+                          },
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orangeAccent),
+                          ))
                     ],
                   )
                 ],

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:home_services_app/pages/ServicesProviders.dart';
-import 'package:home_services_app/utils/Widgets.dart';
-import 'package:home_services_app/utils/datas_services.dart';
-import 'package:home_services_app/utils/textstyle.dart';
+
+import '../components/Widgets.dart';
+import '../model/datas_services.dart';
+import '../utils/textstyle.dart';
+import 'ItemProvider.dart';
+import 'package:get/get.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -19,7 +21,7 @@ class _SearchPageState extends State<SearchPage> {
         child: Column(
           children: [
             gap(20),
-            const Text(
+            Text(
               "Search",
               style: pageHeadings,
             ),
@@ -35,16 +37,11 @@ class _SearchPageState extends State<SearchPage> {
                     mainAxisSpacing: 10.0, // Vertical spacing between items
                     childAspectRatio: 0.85, // Aspect ratio for grid items
                   ),
-                  itemCount: homeServicesImages.length,
+                  itemCount: popularImages.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ServicesProvidersScreen(),
-                          ),
-                        );
+                        Get.to(ItemsProvidersScreen());
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.21,
@@ -52,33 +49,18 @@ class _SearchPageState extends State<SearchPage> {
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.19,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(20),
-                                  topLeft: Radius.circular(20),
-                                ),
-                                image: DecorationImage(
-                                  image: NetworkImage(homeServicesImages[index]['image']),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.19,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(20),
+                              topLeft: Radius.circular(20),
                             ),
-                            gap(5),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text(
-                                  homeServicesImages[index]['name'],
-                                  style: subHeadings,
-                                ),
-                              ),
+                            image: DecorationImage(
+                              image: NetworkImage(popularImages[index]),
+                              fit: BoxFit.cover,
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     );
@@ -86,7 +68,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
             ),
-            gap(50),
+            gap(20),
           ],
         ),
       ),

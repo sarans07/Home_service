@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:home_services_app/auth/loginScreen.dart';
-import 'package:home_services_app/pages/Homepage.dart';
+import 'package:get/get.dart';
+import '../auth/loginScreen.dart';
+import '../model/datas_services.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   @override
@@ -11,35 +12,8 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<Map<String, String>> walkthroughData = [
-    {
-      'image':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg09JeoGUTvZ8-cYotSuukDA-tG-2jIrnFEg&s',
-      'title': 'Welcome to Home Services',
-      'subtitle':
-      'Your one-stop solution for all home repair and maintenance needs.',
-    },
-    {
-      'image':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4E7XILzr5PWatPF-Utflobm3UFkJi4ILOpg&s',
-      'title': 'Professional Services',
-      'subtitle':
-      'Find skilled professionals for every job, from plumbing to cleaning.',
-    },
-    {
-      'image':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6XvJ_vOeN1joqBBO1PWbtP-2KSYYPLNed0w&s',
-      'title': 'Easy Booking',
-      'subtitle':
-      'Book services quickly and conveniently at your preferred time.',
-    },
-  ];
-
   void _navigateToHomeScreen() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
-    );
+    Get.to(LoginScreen());
   }
 
   @override
@@ -61,11 +35,17 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.network(
-                      data['image']!,
-                      width: 300,
-                      height: 300,
-                      fit: BoxFit.fill,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        width: MediaQuery.of(context).size.width * 1,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                                image: NetworkImage(data['image']!),
+                                fit: BoxFit.cover)),
+                      ),
                     ),
                     SizedBox(height: 20),
                     Text(
@@ -93,7 +73,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
               walkthroughData.length,
-                  (index) => AnimatedContainer(
+              (index) => AnimatedContainer(
                 duration: Duration(milliseconds: 300),
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 width: _currentPage == index ? 12 : 8,
@@ -112,11 +92,11 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
               onPressed: _currentPage == walkthroughData.length - 1
                   ? _navigateToHomeScreen
                   : () {
-                _pageController.nextPage(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              },
+                      _pageController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
               child: Text(
                 _currentPage == walkthroughData.length - 1
                     ? 'Get Started'
